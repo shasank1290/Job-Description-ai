@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Matcher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #ffdc5c;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Banner Section */
+   
+    /* Container for Form */
+    .container {
+      background-color: #f7f7f7;
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      margin: 40px auto;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+      color: #333;
+    }
+
+    form label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #444;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      background-color: #fdfdfd;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #5e5eff;
+      outline: none;
+    }
+
+    button {
+      margin-top: 24px;
+      padding: 12px;
+      width: 100%;
+      background-color: #5e5eff;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background-color: #4e4ee0;
+    }
+  </style>
+</head>
+<body>
+
+  
+
+  <!-- Resume Matcher Form -->
+  <div class="container">
+    <h1>Resume Matcher</h1>
+    <form id="resumeForm">
+            <label><b>Name</b></label>
+      <input type="text" name="name" placeholder="Enter your name" required />
+
+      <label><b>Email</b></label>
+      <input type="email" name="email" placeholder="Enter your email" required />
+
+      <label><b>Phone</b></label>
+      <input type="tel" name="phone" placeholder="Enter your phone number" required />
+
+      <label><b>Job Description</b></label>
+      <textarea name="jobDescription" rows="4" placeholder="Paste the job description here..." required></textarea>
+
+      <label><b>Upload Resume (PDF/DOC)</b></label>
+      <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Optional: JavaScript file -->
+  <script src="scripts/form.js"></script>
+</body>
+</html>
