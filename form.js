@@ -12,7 +12,7 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
   reader.onload = async function () {
     const base64String = reader.result.split(',')[1]; // strip data URL header
 
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxNl4Bbx7acp_LiE5yc9Js46CRlSc_BiTUjG8VuLg8tABQ1tZ-joOJOzZfaGZXbU07DJg/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbwWmWBtFM-ayKk0Bdsl7pwuXkysP9Pbm_O3iCPmwmHud7TaoQ9wGm9zNzGCMD8q06hnFg/exec", {
       method: "POST",
       body: JSON.stringify({
         name,
