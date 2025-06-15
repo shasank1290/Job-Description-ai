@@ -20,7 +20,7 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
     const base64String = reader.result.split(',')[1]; // remove the data: prefix
 
     try {
-      const response = await fetch("https://webhook-test.com/16de1dc8c594e540bed47d916ef474e8", {
+      const response = await fetch("https://qwert12.app.n8n.cloud/webhook/9f790371-1715-4a0f-a913-69a8c30f363a", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
