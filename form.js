@@ -25,7 +25,7 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
       }
 
       // Send data to webhook
-      const response = await fetch("https://your-webhook-url.com", {
+      const response = await fetch("https://webhook-test.com/16de1dc8c594e540bed47d916ef474e8", {
         method: "POST",
         body: JSON.stringify({
           name,
