@@ -8,33 +8,49 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
   const jobDescription = form.jobDescription.value;
   const resume = form.resume.files[0];
 
+  // Read PDF file as ArrayBuffer
   const reader = new FileReader();
   reader.onload = async function () {
-    const base64String = reader.result.split(',')[1]; // strip data URL header
+    const typedArray = new Uint8Array(reader.result);
 
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxgrDcPWl8PqS8xJcK9hwE6RsBTQ_Q4syH9LwV_-FvV7DuPAmGiM4xszssjWihmELCsAQ/exec", {
-      method: "POST",
-      body: JSON.stringify({
-        name,
-        email,
-        phone,
-        jobDescription,
-        resumeName: resume.name,
-        resumeType: resume.type,
-        resumeFile: base64String
-      }),
-      headers: {
-        "Content-Type": "application/json"
+    try {
+      const pdf = await pdfjsLib.getDocument(typedArray).promise;
+      let extractedText = "";
+
+      for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        const page = await pdf.getPage(pageNum);
+        const textContent = await page.getTextContent();
+        const text = textContent.items.map(item => item.str).join(" ");
+        extractedText += text + "\n";
       }
-    });
 
-    if (response.ok) {
-      alert("Form submitted successfully!");
-      form.reset();
-    } else {
-      alert("Submission failed.");
+      // Send data to webhook
+      const response = await fetch("https://your-webhook-url.com", {
+        method: "POST",
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          jobDescription,
+          resumeText: extractedText
+        }),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+
+      if (response.ok) {
+        alert("Form submitted successfully!");
+        form.reset();
+      } else {
+        alert("Submission failed.");
+      }
+
+    } catch (error) {
+      console.error("PDF Parsing error:", error);
+      alert("Could not extract text from PDF.");
     }
   };
 
-  reader.readAsDataURL(resume);
+  reader.readAsArrayBuffer(resume);
 });
