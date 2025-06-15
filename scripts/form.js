@@ -21,7 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const base64String = reader.result.split(',')[1];
 
       try {
-        const response = await fetch("https://qwert12.app.n8n.cloud/webhook/9f790371-1715-4a0f-a913-69a8c30f363a", {
+        const response = await fetch("https://qwert12.app.n8n.cloud/webhook-test/resume-submission", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
