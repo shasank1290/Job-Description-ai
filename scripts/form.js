@@ -20,7 +20,7 @@ document.getElementById("resumeForm").addEventListener("submit", async (e) => {
     const base64String = reader.result.split(',')[1]; // remove the data: prefix
 
     try {
-      const response = await fetch("https://script.google.com/macros/s/YOUR_DEPLOYED_WEB_APP_URL/exec", {
+      const response = await fetch("https://webhook-test.com/16de1dc8c594e540bed47d916ef474e8", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
