@@ -32,14 +32,15 @@ document.querySelector("form").addEventListener("submit", async (e) => {
 
     try {
       const data = await response.json();
-      resultDiv.innerHTML = `
-        <h3>Match Score: ${data.match_score}%</h3>
-        <p><strong>Matched Skills:</strong> ${data.matched_skills.join(", ")}</p>
-        <p><strong>Missing Skills:</strong> ${data.missing_skills.join(", ")}</p>
-        <p><strong>Suggestions:</strong></p>
-        <ul>${data.improvement_points.map(p => `<li>${p}</li>`).join("")}</ul>
-        <p><strong>Summary:</strong> ${data.summary}</p>
-      `;
+   resultDiv.innerHTML = `
+  <h3>Match Score: ${data.match_score ?? "N/A"}%</h3>
+  <p><strong>Matched Skills:</strong> ${(data.matched_skills ?? []).join(", ")}</p>
+  <p><strong>Missing Skills:</strong> ${(data.missing_skills ?? []).join(", ")}</p>
+  <p><strong>Suggestions:</strong></p>
+  <ul>${(data.improvement_points ?? []).map(p => `<li>${p}</li>`).join("")}</ul>
+  <p><strong>Summary:</strong> ${data.summary ?? "No summary provided."}</p>
+`;
+
     } catch (error) {
       resultDiv.innerHTML = "Something went wrong. Please try again.";
       console.error(error);
