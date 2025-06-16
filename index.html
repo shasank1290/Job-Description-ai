@@ -1,116 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Resume Matcher</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    body {
-      background-color: #ffdc5c;
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Banner Section */
-   
-    /* Container for Form */
-    .container {
-      background-color: #f7f7f7;
-      padding: 40px;
-      max-width: 500px;
-      width: 90%;
-      margin: 40px auto;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
-      border-radius: 12px;
-    }
-
-    h1 {
-      font-size: 24px;
-      margin-bottom: 24px;
-      text-align: center;
-      color: #333;
-    }
-
-    form label {
-      display: block;
-      margin-top: 16px;
-      margin-bottom: 6px;
-      font-weight: 500;
-      color: #444;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 12px 14px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 15px;
-      background-color: #fdfdfd;
-      transition: border-color 0.2s;
-    }
-
-    input:focus, textarea:focus {
-      border-color: #5e5eff;
-      outline: none;
-    }
-
-    button {
-      margin-top: 24px;
-      padding: 12px;
-      width: 100%;
-      background-color: #5e5eff;
-      color: #fff;
-      font-size: 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    button:hover {
-      background-color: #4e4ee0;
-    }
-  </style>
 </head>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+<body style="font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; background-color: #f4f4f4;">
 
+  <h2>🚀 AI Resume Matcher</h2>
 
+  <form id="resumeForm" style="background: white; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);">
+    <label>Full Name:<br/><input type="text" name="name" required style="width: 100%; padding: 8px;" /></label><br/><br/>
+    <label>Email:<br/><input type="email" name="email" required style="width: 100%; padding: 8px;" /></label><br/><br/>
+    <label>Phone:<br/><input type="tel" name="phone" required style="width: 100%; padding: 8px;" /></label><br/><br/>
+    <label>Job Description:<br/><textarea name="jobDescription" required style="width: 100%; padding: 8px; height: 100px;"></textarea></label><br/><br/>
+    <label>Upload Resume (PDF/DOCX):<br/><input type="file" name="resume" accept=".pdf,.doc,.docx" required /></label><br/><br/>
+    <button type="submit" style="padding: 10px 20px; background-color: #3498db; color: white; border: none; border-radius: 5px;">Submit</button>
+  </form>
 
-<body>
-
-  
-
-  <!-- Resume Matcher Form -->
-  <div class="container">
-    <h1>Resume Matcher</h1>
-    <form id="resumeForm">
-            <label><b>Name</b></label>
-      <input type="text" name="name" placeholder="Enter your name" required />
-
-      <label><b>Email</b></label>
-      <input type="email" name="email" placeholder="Enter your email" required />
-
-      <label><b>Phone</b></label>
-      <input type="tel" name="phone" placeholder="Enter your phone number" required />
-
-      <label><b>Job Description</b></label>
-      <textarea name="jobDescription" rows="4" placeholder="Paste the job description here..." required></textarea>
-
-      <label><b>Upload Resume (PDF/DOC)</b></label>
-      <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
-
-      <button type="submit">Submit</button>
-    </form>
+  <!-- 🔄 Loading Spinner -->
+  <div id="loading" style="display: none; text-align: center; margin: 30px 0;">
+    <div style="border: 6px solid #f3f3f3; border-top: 6px solid #3498db; border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: auto;"></div>
+    <p style="margin-top: 10px; font-weight: bold;">Our AI is analyzing your resume...</p>
   </div>
 
-  <!-- Optional: JavaScript file -->
-  <script src="scripts/form.js"></script>
-<div id="result"></div>
+  <!-- 🧾 Result Display -->
+  <div id="result" style="margin-top: 30px;"></div>
 
+  <style>
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+
+  <script src="form.js"></script>
 </body>
 </html>
