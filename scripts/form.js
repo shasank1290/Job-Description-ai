@@ -20,7 +20,7 @@ document.querySelector("form").addEventListener("submit", async (e) => {
       resumeFile: base64Resume
     };
 
-    const response = await fetch("https://qwert12.app.n8n.cloud/webhook/resume-submission", {
+    const response = await fetch("https://webhook.site/2973ba1c-5fea-4012-b589-d7613c245e03", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
