@@ -1,66 +1,50 @@
-const form = document.getElementById("resumeForm");
-const resultContainer = document.getElementById("result-container");
-
-form.addEventListener("submit", async function (e) {
+document.querySelector("form").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  // Reset previous results and show loader
-  resultContainer.innerHTML = `
-    <div style="padding: 20px; text-align: center;">
-      <p>⏳ Analyzing your resume... Please wait.</p>
-    </div>
-  `;
+  const form = e.target;
+  const name = form.name.value;
+  const email = form.email.value;
+  const phone = form.phone.value;
+  const jobDescription = form.jobDescription.value;
+  const resumeFile = form.resume.files[0];
 
-  const formData = new FormData();
-  formData.append("name", form.name.value);
-  formData.append("email", form.email.value);
-  formData.append("phone", form.phone.value);
-  formData.append("jobDescription", form.jobDescription.value);
-  formData.append("resumeFile", form.resumeFile.files[0]);
+  const reader = new FileReader();
+  reader.onload = async function () {
+    const base64Resume = reader.result.split(",")[1];
 
-  try {
+    const body = {
+      name,
+      email,
+      phone,
+      jobDescription,
+      resumeFile: base64Resume
+    };
+
     const response = await fetch("https://qwert12.app.n8n.cloud/webhook/resume-submission", {
       method: "POST",
-      body: formData,
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(body)
     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error("Submission failed: " + errorText);
+    const resultDiv = document.getElementById("result");
+
+    try {
+      const data = await response.json();
+      resultDiv.innerHTML = `
+        <h3>Match Score: ${data.match_score}%</h3>
+        <p><strong>Matched Skills:</strong> ${data.matched_skills.join(", ")}</p>
+        <p><strong>Missing Skills:</strong> ${data.missing_skills.join(", ")}</p>
+        <p><strong>Suggestions:</strong></p>
+        <ul>${data.improvement_points.map(p => `<li>${p}</li>`).join("")}</ul>
+        <p><strong>Summary:</strong> ${data.summary}</p>
+      `;
+    } catch (error) {
+      resultDiv.innerHTML = "Something went wrong. Please try again.";
+      console.error(error);
     }
+  };
 
-    const result = await response.json();
-
-    // Generate pretty HTML boxes
-    resultContainer.innerHTML = `
-      <div style="background:#f0f8ff; padding:15px; border-radius:8px; margin-bottom: 15px;">
-        <h3>📊 Match Score</h3>
-        <p style="font-size: 24px; font-weight: bold;">${result.match_score || "N/A"}%</p>
-      </div>
-
-      <div style="background:#e6ffe6; padding:15px; border-radius:8px; margin-bottom: 15px;">
-        <h3>✅ Matched Skills</h3>
-        <p>${(result.matched_skills || []).join(", ") || "N/A"}</p>
-      </div>
-
-      <div style="background:#fff3cd; padding:15px; border-radius:8px; margin-bottom: 15px;">
-        <h3>⚠️ Missing Skills</h3>
-        <p>${(result.missing_skills || []).join(", ") || "N/A"}</p>
-      </div>
-
-      <div style="background:#e8f4fc; padding:15px; border-radius:8px; margin-bottom: 15px;">
-        <h3>🧠 Summary</h3>
-        <p>${result.summary || "No summary available"}</p>
-      </div>
-
-      <div style="background:#ffe6f0; padding:15px; border-radius:8px;">
-        <h3>🔧 Suggestions</h3>
-        <ul>${(result.improvement_points || []).map(p => `<li>${p}</li>`).join("")}</ul>
-      </div>
-    `;
-
-    form.reset();
-  } catch (error) {
-    resultContainer.innerHTML = `<div style="color:red;">❌ ${error.message}</div>`;
-  }
+  reader.readAsDataURL(resumeFile);
 });
