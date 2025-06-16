@@ -1,43 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Resume Matcher</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
-    form { background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
-    input, textarea, button { display: block; width: 100%; margin-bottom: 15px; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-    button { background: #007bff; color: white; border: none; cursor: pointer; }
-    button:hover { background: #0056b3; }
-    #result { margin-top: 30px; padding: 20px; background: #fff; border-left: 5px solid #28a745; border-radius: 5px; }
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #ffdc5c;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      background-color: #f7f7f7;
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      margin: 40px auto;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+      color: #333;
+    }
+
+    form label {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 6px;
+      font-weight: 500;
+      color: #444;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px 14px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 15px;
+      background-color: #fdfdfd;
+      transition: border-color 0.2s;
+    }
+
+    input:focus, textarea:focus {
+      border-color: #5e5eff;
+      outline: none;
+    }
+
+    button {
+      margin-top: 24px;
+      padding: 12px;
+      width: 100%;
+      background-color: #5e5eff;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background-color: #4e4ee0;
+    }
+
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      background: #fff;
+      border-left: 5px solid #28a745;
+      border-radius: 5px;
+      font-size: 15px;
+    }
   </style>
 </head>
 <body>
 
-  <h2>Resume & Job Description Matcher</h2>
+  <div class="container">
+    <h1>Resume Matcher</h1>
+    <form id="resumeForm">
+      <label><b>Name</b></label>
+      <input type="text" id="name" name="name" placeholder="Enter your name" required />
 
-  <form id="resumeForm">
-    <input type="text" id="name" placeholder="Your Name" required />
-    <input type="email" id="email" placeholder="Your Email" required />
-    <input type="text" id="phone" placeholder="Your Phone Number" required />
-    <textarea id="jobDescription" placeholder="Paste the Job Description here..." rows="6" required></textarea>
-    <label>Upload Resume (PDF only):</label>
-    <input type="file" id="resumeFile" accept="application/pdf" required />
-    <button type="submit">Submit</button>
-  </form>
+      <label><b>Email</b></label>
+      <input type="email" id="email" name="email" placeholder="Enter your email" required />
 
-  <div id="result"></div>
+      <label><b>Phone</b></label>
+      <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" required />
+
+      <label><b>Job Description</b></label>
+      <textarea id="jobDescription" name="jobDescription" rows="4" placeholder="Paste the job description here..." required></textarea>
+
+      <label><b>Upload Resume (PDF/DOC)</b></label>
+      <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx" required />
+
+      <button type="submit">Submit</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
 
   <script>
-    document.getElementById('resumeForm').addEventListener('submit', async function(e) {
+    document.getElementById("resumeForm").addEventListener("submit", async function(e) {
       e.preventDefault();
 
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
       const phone = document.getElementById("phone").value;
       const jobDescription = document.getElementById("jobDescription").value;
-      const fileInput = document.getElementById("resumeFile");
+      const fileInput = document.getElementById("resume");
       const resultDiv = document.getElementById("result");
 
       if (!fileInput.files.length) {
@@ -62,15 +142,11 @@
         try {
           const response = await fetch("https://qwert12.app.n8n.cloud/webhook/resume-submission", {
             method: "POST",
-            headers: {
-              "Content-Type": "application/json"
-            },
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(payload)
           });
 
           const text = await response.text();
-          console.log("Raw response:", text);
-
           const data = JSON.parse(text);
 
           resultDiv.innerHTML = `
@@ -82,8 +158,8 @@
             <p><strong>📝 Summary:</strong> ${data.summary}</p>
           `;
         } catch (err) {
-          console.error("Error:", err.message);
-          resultDiv.innerHTML = `<p style="color:red;">❌ Something went wrong. Please try again.</p>`;
+          console.error(err);
+          resultDiv.innerHTML = `<p style="color:red;">❌ Something went wrong. Please try again later.</p>`;
         }
       };
 
