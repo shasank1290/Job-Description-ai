@@ -5,10 +5,9 @@ if (form && resultContainer) {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    // Show loading spinner + message
+    // Show loading message
     resultContainer.innerHTML = `
       <div style="padding: 20px; text-align: center;">
-        <div class="loader"></div>
         <p>⏳ Analyzing your resume... Please wait.</p>
       </div>
     `;
@@ -35,11 +34,11 @@ if (form && resultContainer) {
 
       console.log("Response from n8n:", result);
 
-      // Wait 2 seconds before showing result box
-      setTimeout(() => {
-        // If the response is an array, pick first element
-        const res = Array.isArray(result) ? result[0] : result;
+      // Pick first object if response is array
+      const res = Array.isArray(result) ? result[0] : result;
 
+      // Wait 2 seconds before showing result
+      setTimeout(() => {
         resultContainer.innerHTML = `
           <div style="background:#f0f8ff; padding:15px; border-radius:8px; margin-bottom: 15px;">
             <h3>📊 Match Score</h3>
@@ -66,7 +65,7 @@ if (form && resultContainer) {
             <ul>${(res.improvement_points ?? []).map(p => `<li>${p}</li>`).join("") || "<li>None</li>"}</ul>
           </div>
         `;
-      }, 2000); // 2 seconds delay
+      }, 2000);
 
       form.reset();
     } catch (error) {
