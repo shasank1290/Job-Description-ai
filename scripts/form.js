@@ -20,7 +20,7 @@ if (form && resultContainer) {
     formData.append("resumeFile", form.resume.files[0]); // Corrected name to "resume"
 
     try {
-      const response = await fetch("https://qwert12.app.n8n.cloud/webhook/resume-submission", {
+      const response = await fetch("https://qwert12.app.n8n.cloud/webhook/43bac734-875e-4d16-9630-6257042a93b6", {
         method: "POST",
         body: formData,
       });
