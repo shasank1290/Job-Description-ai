@@ -19,7 +19,7 @@ form.addEventListener("submit", async function (e) {
   formData.append("resumeFile", form.resumeFile.files[0]);
 
   try {
-    const response = await fetch("https://your-n8n-url/webhook/resume-submission", {
+    const response = await fetch("https://qwert12.app.n8n.cloud/webhook-test/resume-submission", {
       method: "POST",
       body: formData,
     });
