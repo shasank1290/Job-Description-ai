@@ -1,5 +1,6 @@
 const form = document.getElementById("resumeForm");
-const resultContainer = document.getElementById("result-container");
+const resultContainer = document.getElementById("resultContainer"); 
+
 
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
