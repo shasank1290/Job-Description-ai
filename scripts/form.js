@@ -7,8 +7,10 @@ if (form && spinner && resultContainer) {
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    // Show spinner, hide form
+    // Hide the entire form container
     formContainer.style.display = "none";
+
+    // Show spinner
     spinner.style.display = "block";
 
     const formData = new FormData();
@@ -32,7 +34,7 @@ if (form && spinner && resultContainer) {
       const result = await response.json();
       console.log("Result from N8N:", result);
 
-      // Wait 2 seconds (simulate processing)
+      // Wait 3 seconds (simulate processing)
       setTimeout(() => {
         spinner.style.display = "none";
         resultContainer.style.display = "block";
@@ -46,7 +48,7 @@ if (form && spinner && resultContainer) {
           .map(p => `<li>${p}</li>`)
           .join("");
 
-      }, 2000); // 2 sec delay
+      }, 3000); // 3 sec delay
 
     } catch (error) {
       spinner.style.display = "none";
