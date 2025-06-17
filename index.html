@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Resume Matcher</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
       box-sizing: border-box;
@@ -17,6 +16,7 @@
       padding: 0;
     }
 
+    /* Container for Form */
     .container {
       background-color: #f7f7f7;
       padding: 40px;
@@ -49,6 +49,7 @@
       border-radius: 8px;
       font-size: 15px;
       background-color: #fdfdfd;
+      transition: border-color 0.2s;
     }
 
     input:focus, textarea:focus {
@@ -66,98 +67,53 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      transition: background 0.2s;
     }
 
-    #spinner {
-      display: none;
-      text-align: center;
-      margin-top: 20px;
+    button:hover {
+      background-color: #4e4ee0;
     }
 
-    .loader {
-      border: 6px solid #f3f3f3;
-      border-top: 6px solid #5e5eff;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
-      margin: auto;
-    }
-
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    #resultContainer {
-      display: none;
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 20px;
-      margin: 20px auto;
-      width: 90%;
+    #result-container {
       max-width: 500px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-
-    .result-box {
-      margin-bottom: 16px;
-      padding: 12px;
-      border-left: 5px solid #5e5eff;
-      background: #f4f4ff;
-      border-radius: 6px;
-    }
-
-    .result-box h3 {
-      margin: 0 0 6px;
+      width: 90%;
+      margin: 20px auto 40px auto;
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
 
+  <!-- Resume Matcher Form -->
   <div class="container">
-    <h1>Resume Analysis AI</h1>
+    <h1>Resume Matcher</h1>
     <form id="resumeForm">
-      <label>Name</label>
-      <input type="text" name="name" required />
-      <label>Email</label>
-      <input type="email" name="email" required />
-      <label>Phone</label>
-      <input type="tel" name="phone" required />
-      <label>Job Description</label>
-      <textarea name="jobDescription" required></textarea>
-      <label>Upload Resume</label>
+      <label><b>Name</b></label>
+      <input type="text" name="name" placeholder="Enter your name" required />
+
+      <label><b>Email</b></label>
+      <input type="email" name="email" placeholder="Enter your email" required />
+
+      <label><b>Phone</b></label>
+      <input type="tel" name="phone" placeholder="Enter your phone number" required />
+
+      <label><b>Job Description</b></label>
+      <textarea name="jobDescription" rows="4" placeholder="Paste the job description here..." required></textarea>
+
+      <label><b>Upload Resume (PDF/DOC)</b></label>
       <input type="file" name="resume" accept=".pdf,.doc,.docx" required />
+
       <button type="submit">Submit</button>
     </form>
   </div>
 
-  <div id="spinner">
-    <div class="loader"></div>
-    <p>Processing your resume...</p>
-  </div>
+  <!-- Result container -->
+  <div id="result-container"></div>
 
- <div id="result-container">  
-    <div class="result-box" id="matchScoreBox">
-      <h3>Match Score</h3>
-      <p id="matchScoreText"></p>
-    </div>
-    <div class="result-box" id="matchedSkillsBox">
-      <h3>Matched Skills</h3>
-      <p id="matchedSkillsText"></p>
-    </div>
-    <div class="result-box" id="missingSkillsBox">
-      <h3>Missing Skills</h3>
-      <p id="missingSkillsText"></p>
-    </div>
-    <div class="result-box" id="improvementBox">
-      <h3>Improvement Points</h3>
-      <p id="improvementText"></p>
-    </div>
-  </div>
-
-<script src="scripts/form.js"></script>
-
-
+  <!-- Optional: JavaScript file -->
+  <script src="scripts/form.js"></script>
 </body>
 </html>
